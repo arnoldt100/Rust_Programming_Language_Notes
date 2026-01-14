@@ -5,7 +5,7 @@
 
 ### Variables and Mutability
 
-All variables default to immutable. However, you have the option are to make
+All variables default to immutable. However,  you have the option are to make
 your variables mutable.
 
 
