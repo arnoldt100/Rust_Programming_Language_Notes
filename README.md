@@ -29,7 +29,7 @@ which they were declared.
 
 Variables are declared by use of the let keyword:
 
-  let x = 5;
+    let x = 5;
 
 You can declare a new variable with the same name as a previous variable.
 Rustaceans say that the first variable is shadowed by the second, which means
@@ -108,5 +108,28 @@ languages, arrays in Rust have a fixed length.
 
 
 ### Functions
+
+Rust code uses snake case as the conventional style for function and variable names, in which all letters are lowercase and underscores separate words.
+
+#### Parameters
+
+In function signatures, you must declare the type of each parameter.
+
+
+#### Statements and expression
+
+* Statements are instructions that perform some action and do not return a value.
+* Expressions evaluate to a resultant value.
+
+Functions can return values to the code that calls them. We don’t name return
+values, but we must declare their type after an arrow (->). In Rust, the return
+value of the function is synonymous with the value of the final expression in
+the block of the body of a function. You can return early from a function by
+using the return keyword and specifying a value, but most functions return the
+last expression implicitly.
+
+`()` is the unit type.
+
+### Control Flow
 
 
