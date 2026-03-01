@@ -109,18 +109,23 @@ languages, arrays in Rust have a fixed length.
 
 ### Functions
 
-Rust code uses snake case as the conventional style for function and variable names, in which all letters are lowercase and underscores separate words.
+Rust code uses snake case as the conventional style for function and variable
+names, in which all letters are lowercase and underscores separate words.
 
 #### Parameters
 
-In function signatures, you must declare the type of each parameter.
+In function signatures, you must declare the type of each parameter. We
+separate parameters by a commas.
 
 
 #### Statements and expression
 
 * Statements are instructions that perform some action and do not return a value.
+Semicolons are generally used to end statements. Statements return the unit type.
+
 * Expressions evaluate to a resultant value.
 
+#### Functions with Return Values
 Functions can return values to the code that calls them. We don’t name return
 values, but we must declare their type after an arrow (->). In Rust, the return
 value of the function is synonymous with the value of the final expression in
@@ -130,6 +135,116 @@ last expression implicitly.
 
 `()` is the unit type.
 
+#### The main program
+- **Entry Point:** It is the single required starting point for binary crate
+- **Signature:** The basic main function takes no parameters and returns nothing
+
+
 ### Control Flow
+
+#### if Expressions
+
+The basic form of an `if` expression is
+
+
+    if condition1 {
+        ... statements of expression ... 
+    } else {
+        ... statements of expression ... 
+    }
+
+`condition1` must evaluate to a `bool`
+The `else` expression is optional.
+
+Because `if` is an expression we can assign it to the right side of a `let`
+statement. Remember that blocks of code evaluate to the last expression in 
+them.
+
+#### Repetition Code with `loop`
+
+The loop keyword tells Rust to execute a block of code over and over again. You 
+must explicitly tell it to stop the loop execution with `CTRL-C`.
+ 
+    fn main() {
+        loop {
+          println!("again");
+        }
+    }
+
+#### Returning Values from Loops
+
+To return a value from `loop`, you can add value after a break expression.
+
+    fn main() {
+        let condition = true;
+        let number = if condition { 5 } else { 6 };
+        println!("The value of number is: {number}");
+
+        let mut counter = 0;
+        let result = loop {
+            counter += 1;
+            if counter == 10 {
+                break counter*2;
+            }
+        };
+        println!("The result is: {result}");
+    }
+
+#### Loop Labels to Disambiguate Between Multiple Loops
+
+If you have multiple loops `break` and `continue` apply to the 
+innermost loop at that point. One can optionally specify a loop
+label on a loop that you can then use with the break or continue
+to indicate that those keywords apply to the labeled loop.
+
+    fn main() {
+        let mut count = 0;
+        'counting_up: loop {
+            println!("count = {count}");
+            let mut remaining = 10;
+
+            'counting_down: loop {
+                println!("remaining = {remaining}");
+                if remaining == 9 {
+                    break;
+                }
+
+                if count == 2 {
+                   break 'counting_up;
+                }
+
+                remaining += -1;
+            }
+            count += 1;
+    }
+
+#### Conditional Loops with `while`
+
+Used to run a code while a condition evaluates to `true`. `while` loops 
+can have labels that `break` and `continue` can be used with.
+
+    fn main() {
+        let mut number = 3;
+        while number != 0 {
+            println!("{number}");
+            number -= 1;
+        }
+        println!("LIFTOFF");
+    }
+
+
+#### Looping Through a Collection with `for` 
+
+For loops can have labels that `break` and `continue` can be used with.
+
+    fn main () {
+        let a = [10,20,30,40,50];
+        for element in a {
+            println!("The element value is {element}");
+        }
+    }
+
+## Chapter 4 Understanding Ownership
+[Chapter 4 Understanding Ownership](./docs/chapter_4/understanding_ownership.md)
 
 
