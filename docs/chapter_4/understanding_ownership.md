@@ -24,13 +24,30 @@ Memory on the heap is managed through pointers and references.
 
 ### Variable scope
 
-The following listing demonstrates points about variable scopes:
+#### Block scoping
+The following listing demonstrates points about block variable scoping:
 
     { // s is not valid here, since it's not yet declared
         let s = "hello"; // s is valid from this point forward
 
         // do stuff with s
     } // s's scope is now invalid
+
+#### Non-Lexical Lifetimes
+Non-lexical Lifetimes (NLL) were introduced to Rust in 2018,
+The following listing demonstrates points about NLL:
+
+    fn main () {
+        let mut x = 1;
+        let r = &x; // Immutable borrow of x.
+        println!("r: {}",r); // r is last used here
+        x = 2; // x can be mutated here; Under the old
+               // lexical scoping rules, this statement would
+               // cause a compile-time error.
+        println!("x: {}",x);
+    }
+
+The above example would have failed under the old lexical scoping rules.
 
 ### String literals
 
@@ -48,7 +65,7 @@ from the heap. Consider the listing:
 
 The memory allocation is shown in the following figure.
 
-![String memory representation](./string_memory_repr1.png)
+![String memory representation](./images/string_memory_repr1.png)
 
 When the variable `s` goes out of scope, Rust calls a special function `drop`
 that returns the memory allocated by `s`. Rust calls `drop` automatically at
@@ -80,7 +97,7 @@ Consider the following listing.
 
 The below figure depicts the memory representation for a move in the above listing.
 
-![String memory move](./string_memory_move.png)
+![String memory move](./images/string_memory_move.png)
 
 When we assign variable `s1` to `s2`, the String data&mdash;the pointer, the
 length, and the capacity&mdash;which all are on the stack, are copied. We do
@@ -93,11 +110,68 @@ create deep copies of your data. **Any default variable assignment is a move.**
 
 ### Variables and Data Interacting with Clone 
 
-Use clone to deeply copy a variable.
+Use clone method to deeply copy a variable.
 
-Can't copy a variable with Drop implementation
 
-In general, only simple types that do not require allocation can be copied.
+    let s1 = String::from("hello");
+    let s2 = s1.clone();
+    println!("s1 = {s1}, s2 = {s2}");
+   
+
+### Stack-Only Data: Copy
+
+Consider the following listing:
+
+    let x = 5;
+    let y = x;
+    println!("x = {x}, y = {y}");
+
+The above listing is valid code - x is still a valid variable!
+
+In general, primitive data types that are known at compile time are generally
+placed on the stack. The integer variable x is a known size and hence it's
+stored on the stack,and it's lifetime ends when the function is returned or
+goes out of scope.
+ 
+Rust has a special annotation called the `Copy` trait. 
+
+The Rust Copy trait is a marker trait that changes a type's default behavior
+from move semantics to copy semantics. When a type implements Copy, an
+assignment (=) or function passing results in an implicit bit-wise copy of the
+value, leaving the original variable usable. 
+
+**Key Characteristics**
+
+-Implicit Duplication: Copies happen automatically, for example, during
+variable assignment (let y = x;) or when passing arguments to a function.
+
+- Bit-wise Copy: The duplication is always a simple memory copy of the
+value's bits. You cannot overload this behavior.
+
+- Marker Trait: The Copy trait itself has no methods. Clone as a Supertrait:
+Any type that implements Copy must also implement the Clone trait. The Clone
+implementation for a Copy type is typically trivial (*self). Clone, unlike
+Copy, is an explicit operation (x.clone()) and can run arbitrary code (e.g.,
+allocating new heap memory for a String).
+
+- Rust won’t let us annotate a type with Copy if the type, or any of its parts,
+has implemented the Drop trait. A type cannot implement Copy if it manages
+resources beyond its own size in memory (e.g., heap-allocated data or network
+connections). Implementing Copy for such types would lead to potential memory
+errors, such as a double free.
+
+What types implement the `Copy` trait.
+
+- All the integer types, such as u32. 
+
+- The Boolean type, bool, with values true and false. 
+
+- All the floating-point types, such as f64. 
+
+- The character type, char. 
+
+- Tuples, if they only contain types that also implement Copy. For example,
+(i32, i32) implements Copy, but (i32, String) does not.
 
 ### Return Values and Scope
 
