@@ -22,9 +22,9 @@ Memory on the heap is managed through pointers and references.
 - There can only be one at time.
 - When the owner goes out of scope, the value will be dropped
 
-### Variable scope
+#### Variable scope
 
-#### Block scoping
+##### Block scoping
 The following listing demonstrates points about block variable scoping:
 
     { // s is not valid here, since it's not yet declared
@@ -33,7 +33,7 @@ The following listing demonstrates points about block variable scoping:
         // do stuff with s
     } // s's scope is now invalid
 
-#### Non-Lexical Lifetimes
+##### Non-Lexical Lifetimes
 Non-lexical Lifetimes (NLL) were introduced to Rust in 2018,
 The following listing demonstrates points about NLL:
 
@@ -49,7 +49,7 @@ The following listing demonstrates points about NLL:
 
 The above example would have failed under the old lexical scoping rules.
 
-### String literals
+#### String literals
 
 Rust will never automatically make deep copies of your data.
 
@@ -81,7 +81,7 @@ when an object is created (initialized) and automatically released when the
 object is destroyed (goes out of scope)** 
 ___
 
-### Variables and Data Interacting with Move
+#### Variables and Data Interacting with Move
 
 Consider the following listing.
 
@@ -108,7 +108,7 @@ moved into `s2`.
 This behavior implies a design choice: Rust will never automatically (by default)
 create deep copies of your data. **Any default variable assignment is a move.**
 
-### Variables and Data Interacting with Clone 
+#### Variables and Data Interacting with Clone 
 
 Use clone method to deeply copy a variable.
 
@@ -118,7 +118,7 @@ Use clone method to deeply copy a variable.
     println!("s1 = {s1}, s2 = {s2}");
    
 
-### Stack-Only Data: Copy
+#### Stack-Only Data: Copy
 
 Consider the following listing:
 
@@ -173,6 +173,45 @@ What types implement the `Copy` trait.
 - Tuples, if they only contain types that also implement Copy. For example,
 (i32, i32) implements Copy, but (i32, String) does not.
 
+### Ownership and Functions
+
+The mechanics of passing a value to a function are similar to those when
+assigning a value to a variable. 
+
+** Passing a variable to a function will move or copy, just as assignment does. ** 
+
 ### Return Values and Scope
 
+Returning values can also transfer ownership. The ownership of a variable
+follows the same pattern every time: assigning a value to another variable
+moves it. When a variable that includes data on the heap goes out of scope, the
+value will be cleaned up by `drop` unless ownership of the data has been moved to
+another variable.
+
+Rust does let us return multiple values using a tuple.
+
+### References and Borrowing
+
+A reference is like a pointer in that it’s an address we can follow to access
+the data stored at that address; that data is owned by some other variable.
+Unlike a pointer, a reference is guaranteed to point to a valid value of a
+particular type for the life of that reference.
+
+#### Mutable References
+
+Mutable references have one big restriction: if you have a mutable reference to
+a value, you can have no other references to that value. Code that attempts
+to create two mutable references to s will fail!
+
+We also can't have a mutable reference while we have an immutable reference to
+the same value.
+
+#### Dangling References
+
+Rust's compiler guarantees that references will never dangle.
+
+
+### The Slice Type
+
+(Continue here)
 
