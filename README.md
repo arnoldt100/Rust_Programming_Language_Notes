@@ -247,4 +247,7 @@ For loops can have labels that `break` and `continue` can be used with.
 ## Chapter 4 Understanding Ownership
 [Chapter 4 Understanding Ownership](./docs/chapter_4/understanding_ownership.md)
 
+## Chapter 5 Using Structs To Structure Related Data
+[Chapter 5 Using Structs To Structure Related Data](./docs/chapter_5/using_structs_to_structure_related_data.md)
+
 

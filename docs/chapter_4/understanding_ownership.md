@@ -215,7 +215,7 @@ Rust's compiler guarantees that references will never dangle.
 
 #### String slices
 
-A string slice is a reference to part of a string.
+A string slice is a reference to part of string.
 
 ---
 
@@ -232,8 +232,6 @@ String slices must occur at valid UTF-8 character boundaries. If you attempt
 to take a slice in the middle of multibyte character, an error will occur.
 
 A string literal is a `&str`: it's a slice pointing to a specific type of memory.
-
-
 
 ---
 
