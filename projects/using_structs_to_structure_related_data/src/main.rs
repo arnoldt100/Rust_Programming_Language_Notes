@@ -41,4 +41,11 @@ fn main() {
 
     println!("User3 email: {}",user3.email);
 
+    struct Color(i32,i32,i32);
+    struct Point(i32,i32,i32);
+
+    let black = Color(1,2,3);
+    let origin = Point(0,0,0);
+    println!("The black colors: {}, {}, {}",black.0,black.1,black.2);
+
 }
