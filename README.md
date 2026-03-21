@@ -249,5 +249,9 @@ For loops can have labels that `break` and `continue` can be used with.
 
 ## Chapter 5 Using Structs To Structure Related Data
 [Chapter 5 Using Structs To Structure Related Data](./docs/chapter_5/using_structs_to_structure_related_data.md)
+## Chapter 6 Enums and Pattern Matching
+[Chapter 6 Enums and Pattern Matching](./docs/chapter_6/enums_and_pattern_matching.md)
+
+
 
 

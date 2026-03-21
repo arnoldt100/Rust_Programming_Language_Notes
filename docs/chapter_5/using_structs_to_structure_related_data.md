@@ -16,7 +16,6 @@ Below is a struct definition.
                 .
                 .
         }
-
 ---
 
 *Question: How do we define default values for struct key, value pairs?*
@@ -140,9 +139,13 @@ is essential for the compiler to correctly parse the code.
 One can also define structs that don't have any fields. These are called unit-like
 structs because they behave similarly to  `()`, More on these structs later.
 
+Ownership of struct data, It’s also possible for structs to store references to data owned by something else, but to do so requires the use of lifetimes. More on this later in Chapter 10.
 
 *Question: I'm confused about tuple struct fields and where the field data values are
 stored - on the heap versus stack.*
+
+
+### An Example Program Using Structs
 
 
 
